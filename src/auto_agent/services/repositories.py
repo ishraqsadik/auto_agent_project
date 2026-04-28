@@ -11,12 +11,6 @@ from sqlalchemy.orm import Session
 from auto_agent.services.database import Booking, Call, Customer
 
 
-def find_customer_by_phone(session: Session, phone_e164: str | None) -> Customer | None:
-    if not phone_e164:
-        return None
-    return session.query(Customer).filter(Customer.phone_e164 == phone_e164).first()
-
-
 def find_customer_by_email(session: Session, email: str | None) -> Customer | None:
     if not email:
         return None
@@ -27,16 +21,12 @@ def upsert_customer(
     session: Session,
     *,
     name: str | None,
-    phone_e164: str | None,
     email: str | None,
     vehicle: str | None,
 ) -> Customer:
-    cust = find_customer_by_phone(session, phone_e164) if phone_e164 else None
-    if cust is None and email:
-        cust = find_customer_by_email(session, email)
+    cust = find_customer_by_email(session, email)
     if cust is None:
         cust = Customer(
-            phone_e164=phone_e164,
             name=name,
             email=email,
             vehicle=vehicle,
@@ -50,8 +40,6 @@ def upsert_customer(
             cust.email = email
         if vehicle:
             cust.vehicle = vehicle
-        if phone_e164 and not cust.phone_e164:
-            cust.phone_e164 = phone_e164
         cust.updated_at = datetime.utcnow()
     session.flush()
     return cust

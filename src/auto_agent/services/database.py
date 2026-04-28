@@ -27,7 +27,6 @@ class Customer(Base):
     __tablename__ = "customers"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    phone_e164: Mapped[str | None] = mapped_column(String(32), nullable=True, index=True)
     name: Mapped[str | None] = mapped_column(String(255), nullable=True)
     email: Mapped[str | None] = mapped_column(String(255), nullable=True)
     vehicle: Mapped[str | None] = mapped_column(Text, nullable=True)

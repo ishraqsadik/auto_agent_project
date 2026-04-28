@@ -100,7 +100,6 @@ def create_app() -> FastAPI:
                     cust = upsert_customer(
                         session,
                         name=name,
-                        phone_e164=None,
                         email=customer_email.strip() or None,
                         vehicle=vehicle.strip() or None,
                     )
