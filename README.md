@@ -2,6 +2,10 @@
 
 Public voice front desk (Vapi) calls a FastAPI webhook. CrewAI agents estimate repairs, record SQLite data, and optionally create Google Calendar events after OAuth.
 
+## Code source declaration
+
+This project was developed with human guidance and implementation support from **Cursor** (AI coding assistant), including iterative code generation, refactoring, debugging, and documentation drafting.
+
 ## Quick start
 
 1. Create a virtual environment and install dependencies:
@@ -13,13 +17,15 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-2. Copy environment template:
+2. Create a `.env` file in the project root (example):
 
-```powershell
-copy env.example .env
+```env
+GOOGLE_API_KEY=your_gemini_api_key
+CREWAI_MODEL=gemini/gemini-2.5-flash
+GOOGLE_OAUTH_CLIENT_ID=your_google_oauth_client_id
+GOOGLE_OAUTH_CLIENT_SECRET=your_google_oauth_client_secret
+GOOGLE_OAUTH_REDIRECT_URI=http://127.0.0.1:8000/integrations/google/callback
 ```
-
-Edit `.env` with `GOOGLE_API_KEY` and optional `CREWAI_MODEL`, OAuth fields for Calendar.
 
 3. Run three terminals:
 
@@ -65,6 +71,13 @@ Use a server tool with JSON arguments (all strings):
 - `symptom`
 - `date`
 - `time`
+
+## Runtime architecture
+
+- **Voice/front desk layer:** Vapi assistant collects booking details and calls `process_booking`.
+- **Backend reasoning layer:** FastAPI invokes two CrewAI agents (`Diagnostic Specialist` and `Scheduling Coordinator`) for estimate + booking response synthesis.
+- **Persistence/integration layer:** deterministic Python services save call/customer/booking rows in SQLite and create Google Calendar events.
+- **Dashboard layer:** Streamlit reads logs + SQLite tables for live monitoring.
 
 ## Project layout
 

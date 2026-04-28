@@ -69,7 +69,7 @@ else:
         st.subheader("Customers")
         try:
             df = load_sql_df(
-                "SELECT id, phone_e164, name, email, vehicle, created_at FROM customers ORDER BY id DESC LIMIT 100"
+                "SELECT id, name, email, vehicle, created_at FROM customers ORDER BY id DESC LIMIT 100"
             )
             st.dataframe(df, use_container_width=True, hide_index=True)
         except Exception as e:
