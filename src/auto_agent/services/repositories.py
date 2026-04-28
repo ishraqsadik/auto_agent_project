@@ -17,6 +17,12 @@ def find_customer_by_phone(session: Session, phone_e164: str | None) -> Customer
     return session.query(Customer).filter(Customer.phone_e164 == phone_e164).first()
 
 
+def find_customer_by_email(session: Session, email: str | None) -> Customer | None:
+    if not email:
+        return None
+    return session.query(Customer).filter(Customer.email == email).first()
+
+
 def upsert_customer(
     session: Session,
     *,
@@ -27,7 +33,7 @@ def upsert_customer(
 ) -> Customer:
     cust = find_customer_by_phone(session, phone_e164) if phone_e164 else None
     if cust is None and email:
-        cust = session.query(Customer).filter(Customer.email == email).first()
+        cust = find_customer_by_email(session, email)
     if cust is None:
         cust = Customer(
             phone_e164=phone_e164,

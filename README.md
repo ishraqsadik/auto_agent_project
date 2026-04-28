@@ -60,7 +60,6 @@ Complete consent once. Refresh token is stored in SQLite (`oauth_tokens`).
 Use a server tool with JSON arguments (all strings):
 
 - `customer_name`
-- `customer_phone` (E.164 if possible, e.g. `+15551234567`)
 - `customer_email` (required for calendar invite)
 - `vehicle` (e.g. `2018 Honda Civic`)
 - `symptom`
