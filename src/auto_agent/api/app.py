@@ -9,6 +9,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.responses import RedirectResponse
 
+from auto_agent.api.dashboard_api import router as dashboard_router
 from auto_agent.agents.crew_backend import run_crew_backend
 from auto_agent.agents.tools import log_agent_action
 from auto_agent.api.payload_utils import extract_external_call_id, payload_snippet
@@ -28,6 +29,7 @@ async def lifespan(app: FastAPI):
 
 def create_app() -> FastAPI:
     app = FastAPI(title="Bulls Auto Repair API", lifespan=lifespan)
+    app.include_router(dashboard_router)
 
     @app.get("/health")
     async def health():
