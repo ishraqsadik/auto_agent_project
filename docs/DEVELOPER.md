@@ -46,6 +46,8 @@ Do not set `PUBLIC_API_URL` / `STREAMLIT_DASHBOARD_KEY` in local Streamlit secre
 ## Render (FastAPI)
 
 1. Push this repo to GitHub and create a **Web Service** from the repo (or use **Blueprint** with `render.yaml` in the root).
+   - Python runtime is pinned in `runtime.txt` and `.python-version` to `3.12.3` (required because `crewai==1.14.3` does not support Python `3.14`).
+   - If Render still shows `3.14.x`, set `PYTHON_VERSION=3.12.3` in the service env vars and trigger **Clear build cache + Deploy** once.
 2. Set environment variables in the Render dashboard (values marked `sync: false` in `render.yaml` must be added manually):
    - `GOOGLE_API_KEY`, `CREWAI_MODEL`
    - `GOOGLE_OAUTH_CLIENT_ID`, `GOOGLE_OAUTH_CLIENT_SECRET`
