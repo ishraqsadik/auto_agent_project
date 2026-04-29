@@ -8,6 +8,6 @@ On the call, share your **name**, **email**, **vehicle** (year/make/model), what
 
 Watch live call logs here: [Streamlit](https://autoagentproject.streamlit.app/)
 
-For more implementation details, see docs/DEVELOPER.md
+For more implementation details, see **docs/DEVELOPER.md**
 
 This project was developed with implementation support from **Cursor** (AI coding assistant).
